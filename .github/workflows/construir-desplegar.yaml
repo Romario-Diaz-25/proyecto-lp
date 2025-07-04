@@ -96,6 +96,10 @@ jobs:
             -backend-config="dynamodb_table=terraform-locks-2"
         working-directory: iac
 
+      - name: Desbloquear estado stale (force-unlock)
+        working-directory: iac
+        run: terraform force-unlock 802b36d5-abe9-eb7e-ebdd-106e6def8726 -force
+
       - name: Aplicar Terraform
         run: |
           terraform apply \
