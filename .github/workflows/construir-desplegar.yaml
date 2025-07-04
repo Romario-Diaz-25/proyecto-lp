@@ -117,7 +117,8 @@ jobs:
             -var="DB_MYSQL_POOL_MIN=${{ vars.DB_MYSQL_POOL_MIN }}" \
             
             -var="nombre_servicio_ecs=${{ vars.NOMBRE_SERVICIO }}" \
-            -auto-approve
+            -auto-approve \
+            -input=false
         working-directory: iac
 
       - name: Forzar nuevo despliegue ECS
