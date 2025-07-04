@@ -5,11 +5,11 @@
   "main": "index.ts",
   "scripts": {
     "dev": "npx nodemon index.ts",
-    "start": "tsc && node --env-file=.env build/index.js",
+    "start": "tsc && node build/index.js",
     "start:local": "node --env-file=.env --run dev",
     "lint": "npx eslint"
   },
-  "author": "Douglas Zúñiga",
+  "author": "Romario Diaz",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.4",

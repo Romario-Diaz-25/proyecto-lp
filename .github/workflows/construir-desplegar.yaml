@@ -1,0 +1,128 @@
+name: Construir y Desplegar a AWS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: main
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+
+    steps:
+      - name: Recuperar el código
+        uses: actions/checkout@v3
+
+      - name: Configurar las credenciales AWS
+        run: |
+          aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+          aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+          aws configure set aws_session_token "$AWS_SESSION_TOKEN"
+          aws configure set region "$AWS_REGION"
+
+      - name: Verificar las credenciales
+        run: aws sts get-caller-identity
+
+      # - name: Construir Spring Boot app
+      #   run: ./mvnw clean package -DskipTests
+      #   working-directory: backend
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
+        working-directory: backend/
+
+      - name: Compilar / Build
+        run: npm run build
+        working-directory: backend/
+
+      - name: Construir la imagen docker
+        run: docker build -t tienda-virtual .
+        working-directory: backend
+
+      - name: Iniciar Sesión en ECR
+        run: |
+          aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+      - name: Crear el reposiorio ECR si no existe
+        run: |
+          aws ecr describe-repositories --repository-names tienda-virtual || aws ecr create-repository --repository-name tienda-virtual
+
+      - name: Push Docker image
+        run: |
+          docker tag tienda-virtual ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/tienda-virtual
+          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/tienda-virtual
+
+      - name: Build Lambda Functions
+        run: |
+          cd serverless/tiendavirtual/packages/funciones/crear-orden
+          npm ci
+          npm run build
+
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.5
+
+      - name: Inicializar Terraform
+        run: terraform init -backend-config "bucket=${{ vars.BUCKET }}" -backend-config "dynamodb_table=${{ vars.LOCKS }}"
+        working-directory: iac
+
+      - name: Aplicar Terraform
+        run: |
+          terraform apply \
+            -var="id_cuenta_aws=${{ vars.AWS_ACCOUNT_ID }}" \
+            -var="rol_lab_arn=${{ vars.ROL_LAB_ARN }}" \
+            -var="url_base_servicio=${{ vars.URL_BASE_SERVICIO }}" \
+            -var="nombre_cluster_ecs=${{ vars.NOMBRE_CLUSTER }}" \
+            -var="familia_tarea_ecs=${{ vars.FAMILIA_TAREA_ECS }}" \
+            -var="nombre_repo_ecr=${{ vars.NOMBRE_REPO_ECR }}" \
+
+            -var="STAGE=${{ vars.STAGE }}" \
+            -var="DOCKER_NETWORK=${{ vars.DOCKER_NETWORK }}" \
+            -var="APP_NAME=${{ vars.APP_NAME }}" \
+            -var="APP_PORT=${{ vars.APP_PORT }}" \
+
+            -var="DB_MYSQL_HOST=${{ vars.DB_MYSQL_HOST }}" \
+            -var="DB_MYSQL_PORT=${{ vars.DB_MYSQL_PORT }}" \
+            -var="DB_MYSQL_USER=${{ vars.DB_MYSQL_USER }}" \
+            -var="DB_MYSQL_PASS=${{ secrets.DB_MYSQL_PASS }}" \
+            -var="DB_MYSQL_NAME=${{ vars.DB_MYSQL_NAME }}" \
+            -var="DB_MYSQL_TIME=${{ vars.DB_MYSQL_TIME }}" \
+            -var="DB_MYSQL_DIALECT=${{ vars.DB_MYSQL_DIALECT }}" \
+            -var="DB_MYSQL_POOL_MAX=${{ vars.DB_MYSQL_POOL_MAX }}" \
+            -var="DB_MYSQL_POOL_MIN=${{ vars.DB_MYSQL_POOL_MIN }}" \
+            
+            -var="nombre_servicio_ecs=${{ vars.NOMBRE_SERVICIO }}" \
+            -auto-approve
+        working-directory: iac
+
+      - name: Forzar nuevo despliegue ECS
+        run: |
+          aws ecs update-service --cluster ${{ vars.NOMBRE_CLUSTER }} --service ${{ vars.NOMBRE_SERVICIO }} --force-new-deployment
+
+      - name: Instalar dependencias Frontend
+        run: npm install
+        working-directory: frontend
+
+      - name: Compilar Frontend
+        run: npm run build
+        working-directory: frontend
+
+      - name: Instalar Vercel CLI
+        run: npm install -g vercel
+
+      - name: Desplegar en Vercel
+        run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
+        working-directory: frontend
