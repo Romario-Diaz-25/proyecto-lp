@@ -1,0 +1,21 @@
+version: "2.1"
+
+networks:
+  gcp_network:
+    name: ${DOCKER_NETWORK}
+    driver: bridge
+    external: true
+
+services:      
+  ms.education-labs:
+    labels:
+      svc: "ms-education-labs"
+    restart: always
+    container_name: ms.education-labs
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "3002:3000"
+    networks:
+      - gcp_network

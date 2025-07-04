@@ -1,0 +1,37 @@
+{
+  "common": {
+    "error": {
+      "invalid": "Valor invalido para: {{value}}",
+      "notFound": "{{value}} no encontrado",
+      "notModified": "{{value}} no se actualizó",
+      "notDeleted": "{{value}} no se eliminó",
+      "unauthorized": "Api Key Inválido"
+    }
+  },
+  "token": {
+    "error": {
+      "create": "Error generando el token"
+    }
+  },
+  "authorization": {
+    "error": {
+      "create": "Error creando permisos",
+      "notFound": "Permisos no encontrados",
+      "expired": "Token exp"
+    }
+  },
+  "auditLog": {
+    "info": {
+      "create": "{{entity}} creado",
+      "update": "{{entity}} actualizado",
+      "delete": "{{entity}} eliminado"
+    }
+  },
+  "entity": {
+    "error": {
+      "delete": "Hubo un error a la hora de eliminar Entidad con Id: {{id}}"
+    },
+    "info": {},
+    "other": {}
+  }
+}

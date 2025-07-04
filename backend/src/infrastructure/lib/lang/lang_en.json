@@ -1,0 +1,23 @@
+{
+  "common": {
+    "error": {
+      "invalid": "Valor invalido para: {{value}}",
+      "notFound": "{{value}} no encontrado",
+      "notModified": "{{value}} no se actualizó",
+      "notDeleted": "{{value}} no se eliminó",
+      "unauthorized": "Api Key Inválido"
+    }
+  },
+  "entity": {
+    "error": {
+      "delete": "There was an error while deleting Entity with Id: {{id}}",
+      "invalid": "Valor invalido para: {{value}}",
+      "notFound": "{{value}} no encontrado",
+      "notModified": "{{value}} no se actualizó",
+      "notDeleted": "{{value}} no se eliminó",
+      "unauthorized": "Api Key Inválido"
+    },
+    "info": {},
+    "other": {}
+  }
+}

@@ -1,0 +1,1 @@
+type TPORT = string | number;
