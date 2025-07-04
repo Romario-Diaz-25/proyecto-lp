@@ -38,6 +38,7 @@ jobs:
         with:
           node-version: "22.0.0"
           cache: "npm"
+          cache-dependency-path: "backend/package-lock.json"
 
       - name: Instalar dependencias
         run: npm ci
