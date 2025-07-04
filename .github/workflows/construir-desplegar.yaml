@@ -91,10 +91,6 @@ jobs:
         run: terraform init -backend-config "bucket=${{ vars.BUCKET }}" -backend-config "dynamodb_table=${{ vars.LOCKS }}"
         working-directory: iac
 
-      - name: Desbloquear estado Terraform
-        run: terraform force-unlock 4d619f17-718a-4c09-16c8-0b743eca5429 -force
-        working-directory: backend/terraform
-
       - name: Aplicar Terraform
         run: |
           terraform apply \
