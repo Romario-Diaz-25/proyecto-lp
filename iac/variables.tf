@@ -6,30 +6,36 @@ variable "region" {
 variable "id_cuenta_aws" {
   description = "ID de la cuenta de AWS donde se desplegarán los recursos"
   type        = string
+  default     = "151115447934" 
 }
 
 variable "rol_lab_arn" {
   description = "ARN del rol del laboratorio en AWS academy"
   type        = string
+default     = "arn:aws:iam::151115447934:role/LabRole"
 }
 
 variable "url_base_servicio" {
   description = "URL base del servicio al que la función Lambda se conectará"
   type        = string
+  default     = "https://api.example.com"
 }
 
 variable "nombre_cluster_ecs" {
     description = "Nombre del clúster ECS donde se desplegará la tarea"
     type        = string
+    default     = "proyecto-lp-cluster"
 }
 variable "familia_tarea_ecs" {
     description = "value de la familia de tareas ECS"
     type        = string
+    default     = "proyecto-lp-tarea"
 }
 
 variable "nombre_repo_ecr" {
     description = "value del repositorio ECR donde se almacenará la imagen del contenedor"
     type        = string
+    default     = "proyecto-lp"
 }
 
 variable "DB_MYSQL_HOST" {
@@ -113,4 +119,6 @@ variable "APP_PORT" {
 variable "nombre_servicio_ecs" {
     description = "Nombre del servicio ECS donde se desplegará la tarea"
     type        = string
+    default     = "proyecto-lp-servicio"
+
 }
