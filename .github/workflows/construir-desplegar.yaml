@@ -90,9 +90,10 @@ jobs:
       - name: Inicializar Terraform
         run: |
           terraform init -reconfigure \
-            -backend-config="bucket=${{ vars.BUCKET }}" \
-            -backend-config="key=proyecto-lp-roma/backend-terraform.tfstate" \
-            -backend-config="dynamodb_table=${{ vars.LOCKS }}"
+            -backend-config="bucket=proyecto-lp-roma" \
+            -backend-config="key=proyecto-lp/backend-terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-locks-2"
         working-directory: iac
 
       - name: Aplicar Terraform
