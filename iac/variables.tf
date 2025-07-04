@@ -24,7 +24,7 @@ variable "url_base_servicio" {
 variable "nombre_cluster_ecs" {
     description = "Nombre del clúster ECS donde se desplegará la tarea"
     type        = string
-    default     = "proyecto-lp-cluster"
+    default     = "proyecto-lp-cluster-1"
 }
 variable "familia_tarea_ecs" {
     description = "value de la familia de tareas ECS"
