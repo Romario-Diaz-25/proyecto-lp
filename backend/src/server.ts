@@ -23,6 +23,13 @@ class Server {
     this.app.use(cors({ origin: "*" }));
     this.app.use(morgan("dev"));
 
+    this.app.get("/", (_req: Request, res: Response) => {
+      res.status(HttpCode.OK).json({
+        success: true,
+        kindMessage: statusResponse.OK,
+        message: "API is running",
+      });
+    });
     this.app.use("/v1", this.api);
 
     this.app.use((_req: Request, res: Response) => {
