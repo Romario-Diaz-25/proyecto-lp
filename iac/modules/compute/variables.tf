@@ -26,21 +26,6 @@ variable "nombre_repo_ecr" {
   description = "Nombre del repositorio ECR donde se almacenará la imagen del contenedor"
 }
 
-variable "servidor_base_datos" {
-  type = string
-  description = "URL de la base de datos para la aplicación"
-}
-
-variable "usuario_base_datos" {
-  type = string
-  description = "Usuario de la base de datos para la aplicación"
-}
-
-variable "contrasenha_base_datos" {
-  type = string
-  description = "Contraseña de la base de datos para la aplicación"
-  
-}
 
 variable "DB_MYSQL_HOST" {
     description = "value de la URL de la base de datos para la aplicación"
