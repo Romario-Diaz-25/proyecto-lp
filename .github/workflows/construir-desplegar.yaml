@@ -122,6 +122,7 @@ jobs:
             
             -var="nombre_servicio_ecs=${{ vars.NOMBRE_SERVICIO }}" \
             -auto-approve \
+            -lock=false \
             -input=false
         working-directory: iac
 
