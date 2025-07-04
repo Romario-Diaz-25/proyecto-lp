@@ -98,7 +98,7 @@ jobs:
 
       - name: Desbloquear estado stale (force-unlock)
         working-directory: iac
-        run: terraform force-unlock 802b36d5-abe9-eb7e-ebdd-106e6def8726 -force
+        run: terraform force-unlock -force 802b36d5-abe9-eb7e-ebdd-106e6def8726
 
       - name: Aplicar Terraform
         run: |
