@@ -121,13 +121,13 @@ resource "aws_apigatewayv2_stage" "default_stage" {
 #########################################
 resource "aws_apigatewayv2_route" "clientes_get_all" {
   api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "GET /clientes"
+  route_key = "GET /examen"
   target    = "integrations/${aws_apigatewayv2_integration.examen_integration_get_all.id}"
 }
 
 resource "aws_apigatewayv2_route" "examen_get_proxy" {
   api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "GET /clientes/{proxy+}"
+  route_key = "GET /examen/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.examen_integration.id}"
 }
 
@@ -137,7 +137,7 @@ resource "aws_apigatewayv2_route" "examen_get_proxy" {
 
 resource "aws_apigatewayv2_route" "pregunta_examen_get_proxy" {
   api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "GET /clientes/{proxy+}"
+  route_key = "GET /examen/get_all_by_exam_id/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.preguntas_examen_integration_get_all_by_exam_id.id}"
 }
 
