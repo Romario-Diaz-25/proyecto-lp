@@ -3,7 +3,8 @@ import { EventBridgeEvent } from "aws-lambda";
 export const handler = async (
   event: EventBridgeEvent<string, any>
 ): Promise<void> => {
-  const baseUrl = "https://ib7takzn07.execute-api.us-east-1.amazonaws.com";
+  const baseUrl =
+    "http://proyecto-lp-alb-1580474821.us-east-1.elb.amazonaws.com";
 
   if (!baseUrl) {
     console.error(
