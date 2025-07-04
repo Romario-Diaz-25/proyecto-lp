@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_event_bus" "decrement_bus" {
-    name = "ordenes-bus"
+    name = "decrement-bus"
 }
 
 resource "aws_cloudwatch_event_rule" "decrement_life" {
