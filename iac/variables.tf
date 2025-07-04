@@ -96,6 +96,7 @@ variable "APP_NAME" {
 variable "APP_PORT" {
     description = "Puerto de la aplicacion"
     type        = string
+    default     = 3000
 }
 
 variable "nombre_servicio_ecs" {
