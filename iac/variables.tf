@@ -90,6 +90,7 @@ variable "DOCKER_NETWORK" {
 variable "APP_NAME" {
     description = "Nombre de la aplicacion"
     type        = string
+    default     = "MS-EDUCATION-LABS"
 }
 
 variable "APP_PORT" {
