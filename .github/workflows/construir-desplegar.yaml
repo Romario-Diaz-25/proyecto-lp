@@ -39,7 +39,7 @@ jobs:
           node-version: "22.0.0"
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm i
         working-directory: backend/
 
       - name: Compilar / Build
