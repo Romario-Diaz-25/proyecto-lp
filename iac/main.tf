@@ -50,5 +50,5 @@ module "api" {
     source = "./modules/api"
     load_balancer_url = module.compute.load_balancer_url
     rol_lab_arn = var.rol_lab_arn
-    event_bus_name = module.events.event_bus_name
+    # event_bus_name = module.events.event_bus_name
 }
