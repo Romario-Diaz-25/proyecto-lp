@@ -6,7 +6,8 @@ export class Student {
     private id: number,
     private firstName: string,
     private lastName: string,
-    private age: number
+    private age: number,
+    private lifes: number = 3
   ) {}
 
   getId(): number {
@@ -18,7 +19,8 @@ export class Student {
       student.id,
       student.firstName,
       student.lastName,
-      student.age
+      student.age,
+      student.lifes || 3
     );
     return studentCreated;
   }
@@ -29,6 +31,7 @@ export class Student {
       firstName: this.firstName,
       lastName: this.lastName,
       age: this.age,
+      lifes: this.lifes,
     };
   }
   public toSchema(): IStudentSchema {
@@ -37,6 +40,7 @@ export class Student {
       firstName: this.firstName,
       lastName: this.lastName,
       age: this.age,
+      lifes: this.lifes,
     };
   }
 

@@ -21,4 +21,8 @@ export const StudentSchema: ISchema<IStudentSchema>[] = [
     columnName: "age",
     type: "integer",
   },
+  {
+    columnName: "lifes",
+    type: "integer",
+  },
 ];

@@ -7,11 +7,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# module "serverless" {
-#     source = "./modules/serverless"
-#     rol_lambda_arn = var.rol_lab_arn
-#     url_base_servicio = var.url_base_servicio
-# }
+module "serverless" {
+    source = "./modules/serverless"
+    rol_lambda_arn = var.rol_lab_arn
+    url_base_servicio = var.url_base_servicio
+}
 
 module "compute" {
     source = "./modules/compute"

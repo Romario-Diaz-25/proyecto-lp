@@ -27,6 +27,31 @@ resource "aws_apigatewayv2_integration" "preguntas_examen_integration_get_all_by
   payload_format_version = "1.0"
 }
 
+resource "aws_apigatewayv2_integration" "estudiantes_integration_get_all" {
+  api_id                 = aws_apigatewayv2_api.http_api.id
+  integration_type       = "HTTP_PROXY"
+  integration_uri        = "http://${var.load_balancer_url}/v1/students"
+  integration_method     = "ANY"
+  payload_format_version = "1.0"
+}
+
+resource "aws_apigatewayv2_integration" "estudiantes_integration" {
+  api_id                 = aws_apigatewayv2_api.http_api.id
+  integration_type       = "HTTP_PROXY"
+  integration_uri        = "http://${var.load_balancer_url}/v1/students/{proxy}"
+  integration_method     = "ANY"
+  payload_format_version = "1.0"
+}
+
+resource "aws_apigatewayv2_integration" "decrement_life_put_integration" {
+  api_id                 = aws_apigatewayv2_api.http_api.id
+  integration_type       = "HTTP_PROXY"
+  integration_uri        = "http://${var.load_balancer_url}/v1/students/{proxy}/decrement-life"
+  integration_method     = "ANY"
+  payload_format_version = "1.0"
+}
+
+
 # resource "aws_apigatewayv2_integration" "clientes_integration" {
 #   api_id                 = aws_apigatewayv2_api.http_api.id
 #   integration_type       = "HTTP_PROXY"
@@ -139,6 +164,35 @@ resource "aws_apigatewayv2_route" "pregunta_examen_get_proxy" {
   api_id    = aws_apigatewayv2_api.http_api.id
   route_key = "GET /examen/get_all_by_exam_id/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.preguntas_examen_integration_get_all_by_exam_id.id}"
+}
+
+#########################################
+# Routes - Preguntas Estudiantes
+#########################################
+
+
+resource "aws_apigatewayv2_route" "estudiantes_get_all" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "GET /estudiantes"
+  target    = "integrations/${aws_apigatewayv2_integration.estudiantes_integration_get_all.id}"
+}
+
+resource "aws_apigatewayv2_route" "estudiantes_get_proxy" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "GET /estudiantes/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.estudiantes_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "estudiantes_post" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "POST /estudiantes/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.estudiantes_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "decrement_life_put_proxy" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "PUT /estudiantes/{proxy+}/decrement-life"
+  target    = "integrations/${aws_apigatewayv2_integration.decrement_life_put_integration.id}"
 }
 
 #########################################

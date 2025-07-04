@@ -14,6 +14,17 @@ export class StudentController {
     this.studentService = new StudentService(context);
   }
 
+  async decrementLifes({ params }: IControllerData<IStudent>) {
+    try {
+      const result = await this.studentService.decrementLifes(
+        Number(params.id)
+      );
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async find() {
     try {
       const result = await this.studentService.find();

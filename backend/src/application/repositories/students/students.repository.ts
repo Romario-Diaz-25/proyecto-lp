@@ -31,6 +31,24 @@ export class StudentsRepository implements IStudentRepository {
     }
   }
 
+  async decrementLifes(id: number): Promise<{ modifiedCount: number }> {
+    try {
+      const updateResult = await this.db
+        .from(this.tableName)
+        .update({ lifes: this.db.raw("lifes - 1") })
+        .where({ id });
+
+      if (!updateResult)
+        throw notModifiedError(
+          lang.__("common.error.notModified", { value: this.tableName })
+        );
+
+      return { modifiedCount: updateResult };
+    } catch (error) {
+      throw errorHandler(error, lang.__("internalServerError"));
+    }
+  }
+
   async create(data: IStudentSchema): Promise<{ insertedId: number }> {
     try {
       const [insertedId] = await this.db.from(this.tableName).insert(data);
@@ -53,7 +71,6 @@ export class StudentsRepository implements IStudentRepository {
       const query = this.db
         .select(this.selectableProps)
         .from(this.tableName)
-        .whereNull("deleted_at")
         .where({ ...filters });
 
       const result = await query;
@@ -70,7 +87,6 @@ export class StudentsRepository implements IStudentRepository {
         .select(this.selectableProps)
         .from(this.tableName)
         .where({ id })
-        .whereNull("deleted_at")
         .first();
 
       if (!query)

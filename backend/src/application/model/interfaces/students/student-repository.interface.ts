@@ -10,4 +10,5 @@ export interface IStudentRepository {
     data: Partial<IStudentSchema>
   ): Promise<{ modifiedCount: number }>;
   delete(id: number): Promise<{ deletedCount: number }>;
+  decrementLifes(id: number): Promise<{ modifiedCount: number }>;
 }

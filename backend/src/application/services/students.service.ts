@@ -9,6 +9,15 @@ export class StudentService {
     this.repository = context.studentRepository;
   }
 
+  async decrementLifes(id: number) {
+    try {
+      const result = await this.repository.decrementLifes(id);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async find() {
     try {
       const result = await this.repository.find();
