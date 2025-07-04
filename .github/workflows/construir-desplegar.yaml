@@ -135,17 +135,17 @@ jobs:
         run: |
           aws ecs update-service --cluster ${{ vars.NOMBRE_CLUSTER }} --service ${{ vars.NOMBRE_SERVICIO }} --force-new-deployment
 
-      # - name: Instalar dependencias Frontend
-      #   run: npm install
-      #   working-directory: frontend
+      - name: Instalar dependencias Frontend
+        run: npm install
+        working-directory: frontend
 
-      # - name: Compilar Frontend
-      #   run: npm run build
-      #   working-directory: frontend
+      - name: Compilar Frontend
+        run: npm run build
+        working-directory: frontend
 
-      # - name: Instalar Vercel CLI
-      #   run: npm install -g vercel
+      - name: Instalar Vercel CLI
+        run: npm install -g vercel
 
-      # - name: Desplegar en Vercel
-      #   run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
-      #   working-directory: frontend
+      - name: Desplegar en Vercel
+        run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
+        working-directory: frontend
