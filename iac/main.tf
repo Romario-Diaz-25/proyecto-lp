@@ -7,11 +7,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "serverless" {
-    source = "./modules/serverless"
-    rol_lambda_arn = var.rol_lab_arn
-    url_base_servicio = var.url_base_servicio
-}
+# module "serverless" {
+#     source = "./modules/serverless"
+#     rol_lambda_arn = var.rol_lab_arn
+#     url_base_servicio = var.url_base_servicio
+# }
 
 module "compute" {
     source = "./modules/compute"
@@ -25,13 +25,26 @@ module "compute" {
     usuario_base_datos = var.usuario_base_datos
     contrasenha_base_datos = var.contrasenha_base_datos
     nombre_servicio_ecs = var.nombre_servicio_ecs
+    DB_MYSQL_HOST = var.DB_MYSQL_HOST
+    DB_MYSQL_PORT = var.DB_MYSQL_PORT
+    DB_MYSQL_USER = var.DB_MYSQL_USER
+    DB_MYSQL_PASS = var.DB_MYSQL_PASS
+    DB_MYSQL_NAME = var.DB_MYSQL_NAME
+    DB_MYSQL_TIME = var.DB_MYSQL_TIME
+    DB_MYSQL_DIALECT = var.DB_MYSQL_DIALECT
+    DB_MYSQL_POOL_MAX = var.DB_MYSQL_POOL_MAX
+    DB_MYSQL_POOL_MIN = var.DB_MYSQL_POOL_MIN
+    STAGE = var.STAGE
+    DOCKER_NETWORK = var.DOCKER_NETWORK
+    APP_NAME = var.APP_NAME
+    APP_PORT = var.APP_PORT
 }
 
-module "events" {
-    source = "./modules/events"
-    crear_orden_funcion_arn = module.serverless.crear_orden_funcion_arn
-    crear_orden_funcion_name = module.serverless.crear_orden_funcion_name
-}
+# module "events" {
+#     source = "./modules/events"
+#     crear_orden_funcion_arn = module.serverless.crear_orden_funcion_arn
+#     crear_orden_funcion_name = module.serverless.crear_orden_funcion_name
+# }
 
 module "api" {
     source = "./modules/api"
