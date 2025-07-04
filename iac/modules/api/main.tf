@@ -43,71 +43,26 @@ resource "aws_apigatewayv2_integration" "estudiantes_integration" {
   payload_format_version = "1.0"
 }
 
-resource "aws_apigatewayv2_integration" "decrement_life_put_integration" {
+
+
+
+
+resource "aws_apigatewayv2_integration" "eventbridge_integration" {
   api_id                 = aws_apigatewayv2_api.http_api.id
-  integration_type       = "HTTP_PROXY"
-  integration_uri        = "http://${var.load_balancer_url}/v1/students/decrement-life/{proxy}"
-  integration_method     = "ANY"
+  integration_type       = "AWS_PROXY"
+  integration_subtype    = "EventBridge-PutEvents"
+  credentials_arn        = var.rol_lab_arn
+
+  request_parameters = {
+    Source       = "pe.com.tiendavirtual"
+    DetailType   = "crear-orden"
+    Detail       = "$request.body"
+    EventBusName = var.event_bus_name
+  }
+
   payload_format_version = "1.0"
+  timeout_milliseconds   = 10000
 }
-
-
-# resource "aws_apigatewayv2_integration" "clientes_integration" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "HTTP_PROXY"
-#   integration_uri        = "http://${var.load_balancer_url}/api/clientes/{proxy}"
-#   integration_method     = "ANY"
-#   payload_format_version = "1.0"
-# }
-
-# resource "aws_apigatewayv2_integration" "carritos_integration_get_all" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "HTTP_PROXY"
-#   integration_uri        = "http://${var.load_balancer_url}/api/carritos"
-#   integration_method     = "ANY"
-#   payload_format_version = "1.0"
-# }
-
-# resource "aws_apigatewayv2_integration" "carritos_integration" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "HTTP_PROXY"
-#   integration_uri        = "http://${var.load_balancer_url}/api/carritos/{proxy}"
-#   integration_method     = "ANY"
-#   payload_format_version = "1.0"
-# }
-
-# resource "aws_apigatewayv2_integration" "ordenes_integration_get_all" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "HTTP_PROXY"
-#   integration_uri        = "http://${var.load_balancer_url}/api/ordenes"
-#   integration_method     = "ANY"
-#   payload_format_version = "1.0"
-# }
-
-# resource "aws_apigatewayv2_integration" "ordenes_integration" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "HTTP_PROXY"
-#   integration_uri        = "http://${var.load_balancer_url}/api/ordenes/{proxy}"
-#   integration_method     = "ANY"
-#   payload_format_version = "1.0"
-# }
-
-# resource "aws_apigatewayv2_integration" "eventbridge_integration" {
-#   api_id                 = aws_apigatewayv2_api.http_api.id
-#   integration_type       = "AWS_PROXY"
-#   integration_subtype    = "EventBridge-PutEvents"
-#   credentials_arn        = var.rol_lab_arn
-
-#   request_parameters = {
-#     Source       = "pe.com.tiendavirtual"
-#     DetailType   = "crear-orden"
-#     Detail       = "$request.body"
-#     EventBusName = var.event_bus_name
-#   }
-
-#   payload_format_version = "1.0"
-#   timeout_milliseconds   = 10000
-# }
 
 resource "aws_apigatewayv2_stage" "default_stage" {
   api_id      = aws_apigatewayv2_api.http_api.id
@@ -124,22 +79,6 @@ resource "aws_apigatewayv2_stage" "default_stage" {
     logging_level = "INFO"
   }
 }
-
-#########################################
-# Routes - Ordenes (EventBridge for POST, PUT)
-#########################################
-# resource "aws_apigatewayv2_route" "ordenes_post" {
-#   api_id    = aws_apigatewayv2_api.http_api.id
-#   route_key = "POST /ordenes"
-#   target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
-# }
-
-# resource "aws_apigatewayv2_route" "ordenes_put" {
-#   api_id    = aws_apigatewayv2_api.http_api.id
-#   route_key = "PUT /ordenes/{proxy+}"
-#   target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
-# }
-
 
 #########################################
 # Routes - Examenes
@@ -189,11 +128,88 @@ resource "aws_apigatewayv2_route" "estudiantes_post" {
   target    = "integrations/${aws_apigatewayv2_integration.estudiantes_integration.id}"
 }
 
-resource "aws_apigatewayv2_route" "decrement_life_put_proxy" {
+resource "aws_apigatewayv2_route" "decrement_life_put" {
   api_id    = aws_apigatewayv2_api.http_api.id
   route_key = "PUT /estudiantes/decrement-life/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.decrement_life_put_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
 }
+
+
+# resource "aws_apigatewayv2_integration" "decrement_life_put_integration" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/v1/students/decrement-life/{proxy}"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+
+
+
+# resource "aws_apigatewayv2_integration" "clientes_integration" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/api/clientes/{proxy}"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+# resource "aws_apigatewayv2_integration" "carritos_integration_get_all" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/api/carritos"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+# resource "aws_apigatewayv2_integration" "carritos_integration" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/api/carritos/{proxy}"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+# resource "aws_apigatewayv2_integration" "ordenes_integration_get_all" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/api/ordenes"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+# resource "aws_apigatewayv2_integration" "ordenes_integration" {
+#   api_id                 = aws_apigatewayv2_api.http_api.id
+#   integration_type       = "HTTP_PROXY"
+#   integration_uri        = "http://${var.load_balancer_url}/api/ordenes/{proxy}"
+#   integration_method     = "ANY"
+#   payload_format_version = "1.0"
+# }
+
+
+#########################################
+# Routes - Ordenes (EventBridge for POST, PUT)
+#########################################
+# resource "aws_apigatewayv2_route" "ordenes_post" {
+#   api_id    = aws_apigatewayv2_api.http_api.id
+#   route_key = "POST /ordenes"
+#   target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
+# }
+
+# resource "aws_apigatewayv2_route" "ordenes_put" {
+#   api_id    = aws_apigatewayv2_api.http_api.id
+#   route_key = "PUT /ordenes/{proxy+}"
+#   target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
+# }
+
+
+
+
+# resource "aws_apigatewayv2_route" "ordenes_post" {
+#   api_id    = aws_apigatewayv2_api.http_api.id
+#   route_key = "POST /ordenes"
+#   target    = "integrations/${aws_apigatewayv2_integration.eventbridge_integration.id}"
+# }
 
 #########################################
 # Routes - Clientes

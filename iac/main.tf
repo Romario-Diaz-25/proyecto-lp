@@ -40,15 +40,15 @@ module "compute" {
     APP_PORT = var.APP_PORT
 }
 
-# module "events" {
-#     source = "./modules/events"
-#     crear_orden_funcion_arn = module.serverless.crear_orden_funcion_arn
-#     crear_orden_funcion_name = module.serverless.crear_orden_funcion_name
-# }
+module "events" {
+    source = "./modules/events"
+    decrement_life_funcion_arn = module.serverless.decrement_life_funcion_arn
+    decrement_life_funcion_name = module.serverless.decrement_life_funcion_name
+}
 
 module "api" {
     source = "./modules/api"
     load_balancer_url = module.compute.load_balancer_url
     rol_lab_arn = var.rol_lab_arn
-    # event_bus_name = module.events.event_bus_name
+    event_bus_name = module.events.event_bus_name
 }
