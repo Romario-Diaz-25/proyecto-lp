@@ -1,4 +1,4 @@
-output "crear_orden_funcion_arn" {
+output "decrement_life_funcion_arn" {
   description = "ARN de la función para crear ordenes"
   value       = aws_lambda_function.crear_orden.arn
 }

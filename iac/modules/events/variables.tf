@@ -1,4 +1,4 @@
-variable "crear_orden_funcion_arn" {
+variable "decrement_life_funcion_arn" {
     description = "ARN de la función Lambda para crear ordenes"
     type        = string
 }
