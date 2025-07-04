@@ -14,7 +14,7 @@ variable rol_lab_arn {
     type        = string
 }
 
-# variable event_bus_name {
-#     description = "Nombre del bus de eventos donde se publicarán los eventos"
-#     type        = string
-# }
+variable event_bus_name {
+    description = "Nombre del bus de eventos donde se publicarán los eventos"
+    type        = string
+}
