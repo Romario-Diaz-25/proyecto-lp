@@ -21,9 +21,9 @@ module "compute" {
     id_cuenta_aws = var.id_cuenta_aws
     region_aws = var.region
     nombre_repo_ecr = var.nombre_repo_ecr
-    servidor_base_datos = var.servidor_base_datos
-    usuario_base_datos = var.usuario_base_datos
-    contrasenha_base_datos = var.contrasenha_base_datos
+    # servidor_base_datos = var.servidor_base_datos
+    # usuario_base_datos = var.usuario_base_datos
+    # contrasenha_base_datos = var.contrasenha_base_datos
     nombre_servicio_ecs = var.nombre_servicio_ecs
     DB_MYSQL_HOST = var.DB_MYSQL_HOST
     DB_MYSQL_PORT = var.DB_MYSQL_PORT
