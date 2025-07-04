@@ -16,7 +16,7 @@ export class StudentRouter extends RouterBase<StudentController> {
     this.router.route("/").post(this.controller.create.bind(this.controller));
     this.router.route("/:id").put(this.controller.update.bind(this.controller));
     this.router
-      .route("/:id/decrement-lifes")
+      .route("/decrement-lifes/:id")
       .put(this.controller.decrementLifes.bind(this.controller));
     this.router
       .route("/:id")

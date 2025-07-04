@@ -46,7 +46,7 @@ resource "aws_apigatewayv2_integration" "estudiantes_integration" {
 resource "aws_apigatewayv2_integration" "decrement_life_put_integration" {
   api_id                 = aws_apigatewayv2_api.http_api.id
   integration_type       = "HTTP_PROXY"
-  integration_uri        = "http://${var.load_balancer_url}/v1/students/{proxy}/decrement-life"
+  integration_uri        = "http://${var.load_balancer_url}/v1/students/decrement-life/{proxy}"
   integration_method     = "ANY"
   payload_format_version = "1.0"
 }
@@ -191,7 +191,7 @@ resource "aws_apigatewayv2_route" "estudiantes_post" {
 
 resource "aws_apigatewayv2_route" "decrement_life_put_proxy" {
   api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "PUT /estudiantes/{proxy+}/decrement-life"
+  route_key = "PUT /estudiantes/decrement-life/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.decrement_life_put_integration.id}"
 }
 
