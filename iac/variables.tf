@@ -35,56 +35,67 @@ variable "nombre_repo_ecr" {
 variable "DB_MYSQL_HOST" {
     description = "value de la URL de la base de datos para la aplicación"
     type        = string
+    default     = "tienda-virtual.cxk0zzvbzubk.us-east-1.rds.amazonaws.com"
 }
 
 variable "DB_MYSQL_PORT" {
     description = "puerto de la base de datos"
     type        = string
+    default     = 3306
 }
 
 variable "DB_MYSQL_USER" {
     description = "value del usuario de la base de datos para la aplicación"
     type        = string
+    default     = "admin"
 }
 
 variable "DB_MYSQL_PASS" {
     description = "value de la contraseña de la base de datos para la aplicación"
     type        = string
+    default     = "inf13lp20251"
 }
 
 variable "DB_MYSQL_NAME" {
     description = "Nombre de la base de datos"
     type        = string
+    default     = "ProyectoDB"
 }
 
 variable "DB_MYSQL_TIME" {
     description = "Zona Horaria"
     type        = string
+    default     = "America/Lima"
 }
 
 variable "DB_MYSQL_DIALECT" {
     description = "Motor utilizado"
     type        = string
+    default     = "mysql"
 }
 
 variable "DB_MYSQL_POOL_MAX" {
     description = "Maximo pooling"
     type        = string
+    default     = 10
 }
 
 variable "DB_MYSQL_POOL_MIN" {
     description = "Minimo pooling"
     type        = string
+    default     = 5
 }
 
 variable "STAGE" {
     description = "entorno en el que esta desplegado"
     type        = string
+    default     = "DEV"
 }
 
 variable "DOCKER_NETWORK" {
     description = "red de docker en el que esta desplegado"
     type        = string
+    default     = "labs"
 }
 
 variable "APP_NAME" {
