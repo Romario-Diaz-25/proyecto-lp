@@ -43,7 +43,7 @@ jobs:
         working-directory: backend/
 
       - name: Compilar / Build
-        run: npm run build
+        run: npm start
         working-directory: backend/
 
       - name: Construir la imagen docker
