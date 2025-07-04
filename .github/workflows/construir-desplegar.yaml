@@ -60,7 +60,7 @@ jobs:
         working-directory: backend/
 
       - name: Construir la imagen docker
-        run: docker build -t tienda-virtual .
+        run: docker build -t proyecto-lp .
         working-directory: backend
 
       - name: Iniciar Sesión en ECR
