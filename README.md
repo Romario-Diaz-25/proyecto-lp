@@ -1,90 +1,71 @@
-Este proyecto es una plataforma educativa orientada a la entrega de cursos y exámenes para estudiantes, desarrollada con una arquitectura moderna y herramientas diversas tanto en el backend, frontend e infraestructura.
+```markdown
+# Resumen Tecnológico del Proyecto
 
+Este proyecto es una plataforma educativa para la entrega de cursos y exámenes para estudiantes, desarrollada con tecnologías modernas en frontend, backend e infraestructura.
 
-Frontend:
+---
 
+## Frontend
+- **Next.js**: Framework React para aplicaciones web modernas.
+- **React** con Hooks personalizados para manejo de estado y lógica del examen.
+- **Radix UI**: Librerías de componentes accesibles y estilizados.
+- **Tailwind CSS**: Framework de estilos utilitario con soporte para modo claro/oscuro.
+- Uso de almacenamiento local para progreso y vidas en exámenes.
+- Despliegue configurado en **Vercel** con integración en CI/CD.
 
+## Backend
+- **Node.js** con **TypeScript** y **Express** para APIs REST.
+- Arquitectura basada en controladores, servicios y repositorios.
+- **Knex.js** como ORM para base de datos MySQL.
+- Modelos de dominio bien definidos (Course, Exam, Student, etc.).
+- Internacionalización (i18n) mediante archivos JSON.
+- Manejo avanzado de errores y respuestas con decoradores.
 
-Se utiliza Next.js para la construcción de la aplicación del lado del cliente, aprovechando React y funcionalidades modernas como Server Components.
+## Base de Datos
+- **MySQL** alojado en AWS RDS.
+- Migraciones y esquemas gestionados mediante clases y definiciones de esquema.
+- Soporte para soft delete y pool de conexiones configurado.
 
-Se emplean librerías de Radix UI para componentes accesibles y estilizados.
+## Infraestructura como Código (IaC)
+- **Terraform** para automatización y gestión de infraestructura AWS.
+- Despliegue de clúster **ECS** en **AWS Fargate**.
+- Configuración de **Application Load Balancer (ALB)** para balanceo HTTP.
+- Registro y despliegue de imágenes Docker en **AWS ECR**.
+- Integración con **AWS API Gateway HTTP API** para exponer las APIs.
+- Uso de **AWS EventBridge** para gestión de eventos internos.
+- Configuración de logs con **CloudWatch**.
+- Autoescalado de ECS basado en uso de CPU.
 
-El styling está basado en Tailwind CSS con configuraciones personalizadas para modos claro y oscuro.
+## CI/CD y Despliegue
+- Pipeline en **GitHub Actions** para tests, construcción Docker y despliegue en AWS y Vercel.
+- Control de versiones con tags Git automáticos.
+- Variables de entorno gestionadas con secretos y variables GitHub.
 
-Hooks personalizados y un sistema de manejo de examen con contador de vidas, progreso y manejo de resultados.
+## Otras Herramientas y Configuraciones
+- Linter **ESLint** configurado para Next.js y TypeScript.
+- Utilidades propias para manejo de fechas, errores y respuestas.
+- UI moderna y accesible con componentes de Radix UI.
+- Optimización del frontend para navegadores modernos y Node.js 22.
 
+---
 
-Backend:
+## Servicios AWS Utilizados
+- **ECS (Elastic Container Service) con Fargate**
+- **ECR (Elastic Container Registry)**
+- **Application Load Balancer (ALB)**
+- **API Gateway (HTTP API)**
+- **CloudWatch Logs**
+- **EventBridge (Bus de eventos personalizado)**
+- **Lambda Functions** (para lógica de decremento de vidas vía eventos)
+- **RDS (MySQL)**
 
+---
 
+**En resumen**, se trata de una aplicación web educativa con:
 
-El backend está desarrollado con Node.js y TypeScript, usando el framework Express para el manejo de rutas y controladores.
-
-Se usa arquitectura basada en controladores, servicios y repositorios, con un patrón claro y modular.
-
-Se utiliza Knex.js como ORM para interacción con la base de datos MySQL.
-
-Arquitectura orientada a entidades con clases modelo para dominio (Course, Exam, Student, etc.).
-
-Se aplican validaciones, manejo de errores con clases personalizadas y soporte para internacionalización (i18n) mediante JSON.
-
-Se usan decoradores para manejo automático de controladores y respuestas.
-
-
-Base de Datos:
-
-
-
-La base de datos es MySQL alojada en AWS RDS.
-
-Se gestionan esquemas y migraciones de tablas mediante clases y esquemas definidos con utilidades propias.
-
-Se implementan patrones de soft delete y manejo de pool de conexiones.
-
-
-Infraestructura como Código (IaC):
-
-
-
-El proyecto utiliza Terraform para automatizar la infraestructura AWS.
-
-Se configura un clúster ECS en AWS Fargate con definición de tareas y servicios.
-
-Se implementa un Application Load Balancer (ALB) para enrutar el tráfico HTTP hacia los servicios ECS.
-
-Se utiliza AWS ECR para almacenamiento y despliegue de imágenes Docker.
-
-Se establece integración con AWS API Gateway HTTP API para exponer las APIs backend.
-
-Se emplea EventBridge para eventos internos, incluyendo un bus personalizado y regla para funciones Lambda.
-
-Se configura CloudWatch para logs y métricas.
-
-Autoescalado configurado para ECS basado en uso de CPU.
-
-
-Despliegue y CI/CD:
-
-
-
-GitHub Actions configurado para automatizar pruebas, construcción de imágenes docker y despliegue a AWS ECR y ECS.
-
-Deploy frontend está configurado para desplegar en Vercel con variables de entorno seguras.
-
-Se maneja versionado mediante tags git para control de versiones del build.
-
-
-Otras Tecnologías y Utilidades:
-
-
-
-Uso de ESLint con presets para Next.js y TypeScript.
-
-Librerías para manejo de fechas personalizado y utilidades comunes.
-
-Uso de librerías UI modernas para aseguramiento de experiencia y accesibilidad en frontend.
-
-Manejo de estados con React hooks y almacenamiento local para progreso y vidas del examen.
-
-
-En resumen, este es un aplicativo web moderno para educación en línea, con backend robusto en Node/Express, base de datos MySQL, frontend optimizado con Next.js, y una infraestructura sólida desplegada y gestionada a través de Terraform en AWS, usando servicios como ECS, ECR, ALB, API Gateway, EventBridge y Lambda para garantizar escalabilidad, mantenibilidad y una integración fluida entre componentes.
+- Frontend moderno y optimizado con Next.js y Tailwind CSS.
+- Backend robusto en Node.js/Express con TypeScript y arquitectura modular.
+- BD relacional MySQL gestionada con migraciones.
+- Infraestructura gestionada via Terraform en AWS, aprovechando servicios serverless y gestionados para escalabilidad.
+- Flujo CI/CD automatizado para construcción, pruebas y despliegue en AWS y Vercel.
+```
